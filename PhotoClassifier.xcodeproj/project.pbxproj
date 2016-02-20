@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		948732A51C72E597006A68AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948732A41C72E597006A68AC /* AppDelegate.swift */; };
-		948732A71C72E597006A68AC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948732A61C72E597006A68AC /* ViewController.swift */; };
 		948732AA1C72E597006A68AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 948732A81C72E597006A68AC /* Main.storyboard */; };
 		948732AC1C72E597006A68AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 948732AB1C72E597006A68AC /* Assets.xcassets */; };
 		948732AF1C72E597006A68AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 948732AD1C72E597006A68AC /* LaunchScreen.storyboard */; };
 		948732BA1C72E597006A68AC /* PhotoClassifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948732B91C72E597006A68AC /* PhotoClassifierTests.swift */; };
 		948732C51C72E597006A68AC /* PhotoClassifierUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948732C41C72E597006A68AC /* PhotoClassifierUITests.swift */; };
+		94E475921C75302A00D74365 /* PhotoTakerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E475911C75302A00D74365 /* PhotoTakerController.swift */; };
+		94E475941C75306400D74365 /* ClassifyOrLabelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E475931C75306400D74365 /* ClassifyOrLabelController.swift */; };
+		94E475961C75307500D74365 /* ClassifyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E475951C75307500D74365 /* ClassifyController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +38,6 @@
 /* Begin PBXFileReference section */
 		948732A11C72E597006A68AC /* PhotoClassifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoClassifier.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		948732A41C72E597006A68AC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		948732A61C72E597006A68AC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		948732A91C72E597006A68AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		948732AB1C72E597006A68AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		948732AE1C72E597006A68AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +48,9 @@
 		948732C01C72E597006A68AC /* PhotoClassifierUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoClassifierUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		948732C41C72E597006A68AC /* PhotoClassifierUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoClassifierUITests.swift; sourceTree = "<group>"; };
 		948732C61C72E597006A68AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		94E475911C75302A00D74365 /* PhotoTakerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoTakerController.swift; sourceTree = "<group>"; };
+		94E475931C75306400D74365 /* ClassifyOrLabelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassifyOrLabelController.swift; sourceTree = "<group>"; };
+		94E475951C75307500D74365 /* ClassifyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassifyController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,11 +102,13 @@
 			isa = PBXGroup;
 			children = (
 				948732A41C72E597006A68AC /* AppDelegate.swift */,
-				948732A61C72E597006A68AC /* ViewController.swift */,
 				948732A81C72E597006A68AC /* Main.storyboard */,
 				948732AB1C72E597006A68AC /* Assets.xcassets */,
 				948732AD1C72E597006A68AC /* LaunchScreen.storyboard */,
 				948732B01C72E597006A68AC /* Info.plist */,
+				94E475911C75302A00D74365 /* PhotoTakerController.swift */,
+				94E475931C75306400D74365 /* ClassifyOrLabelController.swift */,
+				94E475951C75307500D74365 /* ClassifyController.swift */,
 			);
 			path = PhotoClassifier;
 			sourceTree = "<group>";
@@ -259,8 +265,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				948732A71C72E597006A68AC /* ViewController.swift in Sources */,
 				948732A51C72E597006A68AC /* AppDelegate.swift in Sources */,
+				94E475961C75307500D74365 /* ClassifyController.swift in Sources */,
+				94E475941C75306400D74365 /* ClassifyOrLabelController.swift in Sources */,
+				94E475921C75302A00D74365 /* PhotoTakerController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,6 +493,7 @@
 				948732CB1C72E597006A68AC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		948732CC1C72E597006A68AC /* Build configuration list for PBXNativeTarget "PhotoClassifierTests" */ = {
 			isa = XCConfigurationList;
@@ -493,6 +502,7 @@
 				948732CE1C72E597006A68AC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		948732CF1C72E597006A68AC /* Build configuration list for PBXNativeTarget "PhotoClassifierUITests" */ = {
 			isa = XCConfigurationList;
@@ -501,6 +511,7 @@
 				948732D11C72E597006A68AC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
