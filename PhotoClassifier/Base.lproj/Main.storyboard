@@ -128,6 +128,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VaA-78-TaD">
                                         <rect key="frame" x="84" y="0.0" width="106" height="30"/>
                                         <state key="normal" title="Label and Send"/>
+                                        <connections>
+                                            <segue destination="1gS-4W-tBt" kind="show" id="zRO-bx-7Oo"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -150,6 +153,60 @@
             </objects>
             <point key="canvasLocation" x="1262" y="-62"/>
         </scene>
+        <!--LabelAndSend-->
+        <scene sceneID="WVA-I8-0yw">
+            <objects>
+                <viewController title="LabelAndSend" id="1gS-4W-tBt" customClass="LabelAndSendController" customModule="PhotoClassifier" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5L1-OH-cZ3"/>
+                        <viewControllerLayoutGuide type="bottom" id="27f-tq-dXK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="X0Z-9t-Ipp">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ag0-aa-vjA">
+                                <rect key="frame" x="140" y="69" width="320" height="462"/>
+                                <subviews>
+                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bzy-CQ-vcD">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="1gS-4W-tBt" id="hZo-rr-YlD"/>
+                                            <outlet property="delegate" destination="1gS-4W-tBt" id="bkS-pG-1bd"/>
+                                        </connections>
+                                    </pickerView>
+                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4bq-4H-X9F">
+                                        <rect key="frame" x="0.0" y="216" width="320" height="216"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="1gS-4W-tBt" id="xAD-3X-WF3"/>
+                                            <outlet property="delegate" destination="1gS-4W-tBt" id="bLn-4a-yGP"/>
+                                        </connections>
+                                    </pickerView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Utw-r7-ZHa">
+                                        <rect key="frame" x="0.0" y="432" width="320" height="30"/>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="sendClassification:" destination="1gS-4W-tBt" eventType="touchUpInside" id="b82-tv-jnG"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ag0-aa-vjA" firstAttribute="centerY" secondItem="X0Z-9t-Ipp" secondAttribute="centerY" id="71r-7y-itp"/>
+                            <constraint firstItem="ag0-aa-vjA" firstAttribute="centerX" secondItem="X0Z-9t-Ipp" secondAttribute="centerX" id="bd7-hM-y3Q"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="categoryPicker" destination="Bzy-CQ-vcD" id="ztR-h7-ujf"/>
+                        <outlet property="labelPicker" destination="4bq-4H-X9F" id="IyY-Ap-gmY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6CO-R2-bUX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1936" y="-205"/>
+        </scene>
         <!--Classify-->
         <scene sceneID="yZj-15-dJ7">
             <objects>
@@ -171,6 +228,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RSn-ku-J43">
                                         <rect key="frame" x="130" y="231" width="59" height="30"/>
                                         <state key="normal" title="Classify!"/>
+                                        <connections>
+                                            <action selector="sendClassification:" destination="jKd-Gs-6QV" eventType="touchUpInside" id="1Q9-pX-T4x"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iris virginica" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RcC-Ah-rgu">
                                         <rect key="frame" x="115" y="276" width="91" height="21"/>
@@ -187,10 +247,14 @@
                             <constraint firstItem="lnK-iW-xh2" firstAttribute="centerY" secondItem="Rjl-pu-laQ" secondAttribute="centerY" id="sxc-En-tLn"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="label" destination="RcC-Ah-rgu" id="as7-VJ-hUK"/>
+                        <outlet property="pickerView" destination="xBm-Hi-c1w" id="CWs-Kr-NfR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="14k-mu-QQJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1254" y="605"/>
+            <point key="canvasLocation" x="1982" y="491"/>
         </scene>
     </scenes>
 </document>

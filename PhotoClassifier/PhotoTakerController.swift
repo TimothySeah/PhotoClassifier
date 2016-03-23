@@ -57,9 +57,9 @@ class PhotoTakerController: UIViewController, UIImagePickerControllerDelegate, U
         }
     }
     
-    // ipc delegate method
+    // imagepickercontroller delegate method
     // if taking picture, save picture and dismiss
-    // if viewing photo, simply load into image
+    // if viewing photo, simply display it in the imageview
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         print("Got an image")
         if let pickedImage:UIImage = (info[UIImagePickerControllerOriginalImage]) as? UIImage {
@@ -77,7 +77,7 @@ class PhotoTakerController: UIViewController, UIImagePickerControllerDelegate, U
         })
     }
     
-    // ipc delegate method, dismiss if user cancelled
+    // imagepickercontroller delegate method, dismiss if user cancelled
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         print("User canceled image")
         dismissViewControllerAnimated(true, completion: {
@@ -86,7 +86,7 @@ class PhotoTakerController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     // what to do when image was saved successfully/unsuccessfully
-    // called by selector?
+    // called by selector
     func imageWasSavedSuccessfully(image: UIImage, didFinishSavingWithError error: NSError!, context: UnsafeMutablePointer<()>) {
         print("Image saved")
         if let theError = error {

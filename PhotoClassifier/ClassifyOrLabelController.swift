@@ -10,8 +10,6 @@ import UIKit
 
 class ClassifyOrLabelController: UIViewController {
     
-    // hypothesis: cant set currentImage.image cuz currentImage not loaded yet
-    
     var currentPhoto: UIImage?
     @IBOutlet weak var currentImage: UIImageView!
     

@@ -9,6 +9,18 @@
 import UIKit
 
 class ClassifyController: UIViewController {
+    
+    
+    @IBOutlet weak var pickerView: UIPickerView!
+    
+    @IBOutlet weak var label: UILabel!
+    
+    
+    // from the server, obtain the classification of the picture specified in the previous view, which has the category specified in pickerView.
+    // then display that classification in label
+    @IBAction func getClassification(sender: UIButton) {
+        
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

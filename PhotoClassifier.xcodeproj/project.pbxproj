@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		944719B01C891E1900CF1B24 /* LabelAndSendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944719AF1C891E1900CF1B24 /* LabelAndSendController.swift */; };
 		948732A51C72E597006A68AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948732A41C72E597006A68AC /* AppDelegate.swift */; };
 		948732AA1C72E597006A68AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 948732A81C72E597006A68AC /* Main.storyboard */; };
 		948732AC1C72E597006A68AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 948732AB1C72E597006A68AC /* Assets.xcassets */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		944719AF1C891E1900CF1B24 /* LabelAndSendController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelAndSendController.swift; sourceTree = "<group>"; };
 		948732A11C72E597006A68AC /* PhotoClassifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoClassifier.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		948732A41C72E597006A68AC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		948732A91C72E597006A68AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				94E475911C75302A00D74365 /* PhotoTakerController.swift */,
 				94E475931C75306400D74365 /* ClassifyOrLabelController.swift */,
 				94E475951C75307500D74365 /* ClassifyController.swift */,
+				944719AF1C891E1900CF1B24 /* LabelAndSendController.swift */,
 			);
 			path = PhotoClassifier;
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 				94E475961C75307500D74365 /* ClassifyController.swift in Sources */,
 				94E475941C75306400D74365 /* ClassifyOrLabelController.swift in Sources */,
 				94E475921C75302A00D74365 /* PhotoTakerController.swift in Sources */,
+				944719B01C891E1900CF1B24 /* LabelAndSendController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
