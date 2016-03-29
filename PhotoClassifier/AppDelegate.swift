@@ -13,9 +13,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // generate and save random matrix Ru if it does not already exist
+        guard let _ = NSKeyedUnarchiver.unarchiveObjectWithFile(Constants.RuURL.path!) as? [[Double]] else {
+            
+            print("FIRST TIME")
+            
+            // generate Ru from a uniform distribution
+            // overfishing: paper says "either a gaussian or a uniform distribution"
+            let rows = Constants.Q["Irises"]
+            let cols = Constants.F["Irises"]
+            let RuRow = [Double](count: cols!, repeatedValue: 0.0)
+            var Ru = [[Double]](count: rows!, repeatedValue: RuRow)
+            for i in 0...(rows!-1) {
+                for j in 0...(cols!-1) {
+                    Ru[i][j] = Double(Double(arc4random())/Double(UINT32_MAX))
+                }
+            }
+            
+            // save and return true iff the result was successful
+            return NSKeyedArchiver.archiveRootObject(Ru, toFile: Constants.RuURL.path!)
+        }
+        
         return true
     }
 

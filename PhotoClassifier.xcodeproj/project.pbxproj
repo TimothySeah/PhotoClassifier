@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		941DAE811CA8A37A0066DD00 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941DAE801CA8A37A0066DD00 /* Constants.swift */; };
 		944719B01C891E1900CF1B24 /* LabelAndSendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944719AF1C891E1900CF1B24 /* LabelAndSendController.swift */; };
 		948732A51C72E597006A68AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948732A41C72E597006A68AC /* AppDelegate.swift */; };
 		948732AA1C72E597006A68AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 948732A81C72E597006A68AC /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 		94E475921C75302A00D74365 /* PhotoTakerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E475911C75302A00D74365 /* PhotoTakerController.swift */; };
 		94E475941C75306400D74365 /* ClassifyOrLabelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E475931C75306400D74365 /* ClassifyOrLabelController.swift */; };
 		94E475961C75307500D74365 /* ClassifyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E475951C75307500D74365 /* ClassifyController.swift */; };
+		94E854F21CA9DE82006F2E38 /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E854F11CA9DE82006F2E38 /* Testing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		941DAE801CA8A37A0066DD00 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		944719AF1C891E1900CF1B24 /* LabelAndSendController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelAndSendController.swift; sourceTree = "<group>"; };
 		948732A11C72E597006A68AC /* PhotoClassifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoClassifier.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		948732A41C72E597006A68AC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -53,6 +56,7 @@
 		94E475911C75302A00D74365 /* PhotoTakerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoTakerController.swift; sourceTree = "<group>"; };
 		94E475931C75306400D74365 /* ClassifyOrLabelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassifyOrLabelController.swift; sourceTree = "<group>"; };
 		94E475951C75307500D74365 /* ClassifyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassifyController.swift; sourceTree = "<group>"; };
+		94E854F11CA9DE82006F2E38 /* Testing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Testing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,8 @@
 				94E475931C75306400D74365 /* ClassifyOrLabelController.swift */,
 				94E475951C75307500D74365 /* ClassifyController.swift */,
 				944719AF1C891E1900CF1B24 /* LabelAndSendController.swift */,
+				941DAE801CA8A37A0066DD00 /* Constants.swift */,
+				94E854F11CA9DE82006F2E38 /* Testing.swift */,
 			);
 			path = PhotoClassifier;
 			sourceTree = "<group>";
@@ -269,10 +275,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				948732A51C72E597006A68AC /* AppDelegate.swift in Sources */,
+				94E854F21CA9DE82006F2E38 /* Testing.swift in Sources */,
 				94E475961C75307500D74365 /* ClassifyController.swift in Sources */,
 				94E475941C75306400D74365 /* ClassifyOrLabelController.swift in Sources */,
 				94E475921C75302A00D74365 /* PhotoTakerController.swift in Sources */,
 				944719B01C891E1900CF1B24 /* LabelAndSendController.swift in Sources */,
+				941DAE811CA8A37A0066DD00 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

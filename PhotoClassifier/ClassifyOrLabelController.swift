@@ -13,7 +13,6 @@ class ClassifyOrLabelController: UIViewController {
     var currentPhoto: UIImage?
     @IBOutlet weak var currentImage: UIImageView!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
