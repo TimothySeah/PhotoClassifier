@@ -8,19 +8,41 @@
 
 import UIKit
 
-class ClassifyController: UIViewController {
+class ClassifyController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+    
+    @IBOutlet weak var categoryPicker: UIPickerView!
+    let categories = Constants.CATEGORIES
+    
+    @IBOutlet weak var classification: UILabel!
+    let labels = Constants.LABELS
     
     
-    @IBOutlet weak var pickerView: UIPickerView!
+    // MARK: - basic picker functions
     
-    @IBOutlet weak var label: UILabel!
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    // return number of rows in pickerview
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return categories.count
+    }
+    
+    // return the currently selected item in the picker view
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return categories[row]
+    }
+    
+    //
     
     
     // from the server, obtain the classification of the picture specified in the previous view, which has the category specified in pickerView.
     // then display that classification in label
+    // overfishing: this method is used for testing for now
     @IBAction func getClassification(sender: UIButton) {
-        
+        print("WHATS GOOD")
     }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

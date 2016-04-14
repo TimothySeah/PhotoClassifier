@@ -11,14 +11,14 @@ import UIKit
 class LabelAndSendController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 
     @IBOutlet weak var categoryPicker: UIPickerView!
-    let categories = ["Irises", "Vehicles"]
+    let categories = Constants.CATEGORIES
     
     @IBOutlet weak var labelPicker: UIPickerView!
-    let labels = [["Iris setosa", "Iris virginica", "Iris versicolor"], ["double decker bus", "Chevrolet van", "Saab 9000", "Opel Manta 400"]]
+    let labels = Constants.LABELS
     
     // overfishing: values only provided for irises so far
     @IBOutlet var irisDimensions: [UITextField]!
-    let irisFields = ["Sepal Length", "Sepal Width", "Petal length", "Petal Width"]
+    let irisFields = Constants.IRISFIELDS
     
     
     // MARK: - basic picker functions
@@ -75,13 +75,18 @@ class LabelAndSendController: UIViewController, UIPickerViewDataSource, UIPicker
         let catVal = categories[categoryPicker.selectedRowInComponent(0)]
         let labVal = labels[categoryPicker.selectedRowInComponent(0)][labelPicker.selectedRowInComponent(0)]
         var features = [String: Double]()
+        var featuresArr = [[Double]](count: Constants.F["Irises"]!, repeatedValue: [0.0])
         for i in 0...(irisDimensions.count-1) {
             features[irisFields[i]] = Double(irisDimensions[i].text!)
+            featuresArr[i][0] = features[irisFields[i]]!
         }
-        let content = ["category": catVal, "label": labVal, "features": features]
+        let Ru = NSKeyedUnarchiver.unarchiveObjectWithFile(Constants.RuURL.path!) as! [[Double]]
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let uid = defaults.objectForKey("UserID")
+        let content = ["category": catVal, "label": labVal, "features": Constants.matrixMultiply(Ru, m2: featuresArr), "userid": uid as! String]
         
         // send the request with completionHandler
-        sendJSONPostData(Constants.URL_NEWPOINT, content: content, completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+        Constants.sendJSONPostData(Constants.URL_NEWPOINT, content: content, completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
                 
                 // make sure we get a 200 response
                 // only save the features on the phone if the transmission was successful
@@ -92,13 +97,13 @@ class LabelAndSendController: UIViewController, UIPickerViewDataSource, UIPicker
                 }
                 
                 // overfishing
-                Testing.printFeatures()
+                //Testing.printFeatures()
                 
                 // save on phone only if transmission was successful
-                self.saveFeatures(features)
-                
+                self.saveFeatures(features, label: labVal)
+            
                 // overfishing
-                Testing.printFeatures()
+                //Testing.printFeatures()
                 
                 // read the json
                 if let postString = NSString(data: data!, encoding: NSUTF8StringEncoding) as? String {
@@ -108,50 +113,41 @@ class LabelAndSendController: UIViewController, UIPickerViewDataSource, UIPicker
         })
     }
     
-    // send CONTENT to URL using POST/JSON
-    func sendJSONPostData(URL: String, content: AnyObject, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) {
-        let request = NSMutableURLRequest(URL: NSURL(string: URL)!)
-        request.HTTPMethod = "POST"
-        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-        do {
-            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(content, options: NSJSONWritingOptions())
-        } catch {
-            print("error occurred")
-        }
-        let session = NSURLSession.sharedSession()
-        session.dataTaskWithRequest(request, completionHandler: completionHandler).resume()
-    }
-    
-    // save new feature data on phone
+    // save new feature data (with label) on phone
     // overfishing: generalize so can store vehicles, etc not just irises
-    func saveFeatures(features: [String: Double]) {
+    func saveFeatures(features: [String: Double], label: String) {
         
         // overfishing: make sure this succeeds
-        if var Xu = NSKeyedUnarchiver.unarchiveObjectWithFile(Constants.XuURL.path!) as? [[String: Double]] {
+        if var Xu = NSKeyedUnarchiver.unarchiveObjectWithFile(Constants.XuURL.path!) as? [[String: Double]], var yu = NSKeyedUnarchiver.unarchiveObjectWithFile(Constants.yuURL.path!) as? [String] {
             
             // only store MAX_POINTS features
             while Xu.count >= Constants.MAX_POINTS["Irises"] {
                 Xu.removeAtIndex(0)
+                yu.removeAtIndex(0)
             }
             
             // save updated features
             Xu.append(features)
+            yu.append(label)
             NSKeyedArchiver.archiveRootObject(Xu, toFile: Constants.XuURL.path!)
+            NSKeyedArchiver.archiveRootObject(yu, toFile: Constants.yuURL.path!)
             
             // send mean and covariance matrices to server upon reaching MAX_POINTS features
             if Xu.count >= Constants.MAX_POINTS["Irises"] {
                 let defaults = NSUserDefaults.standardUserDefaults()
-                if (!defaults.boolForKey("hasSent")) {
+                if (!defaults.boolForKey("hasSentMC")) {
                     sendMeansCovs(Xu)
-                    defaults.setBool(true, forKey: "hasSent") // mark as sent
+                    defaults.setBool(true, forKey: "hasSentMC") // mark as sent
                 }
             }
-        } else {
+        } else { // if first time
             NSKeyedArchiver.archiveRootObject([features], toFile: Constants.XuURL.path!)
+            NSKeyedArchiver.archiveRootObject([label], toFile: Constants.yuURL.path!)
         }
     }
     
     // compute and send the mean and covariance matrices to the server
+    // means is [String: Double] while covs is [[Double]]
     // overfishing: please test this
     func sendMeansCovs(Xu: [[String: Double]]) {
         
@@ -185,8 +181,10 @@ class LabelAndSendController: UIViewController, UIPickerViewDataSource, UIPicker
         }
         
         // send both
-        let content = ["means": means, "covs": covs]
-        sendJSONPostData(Constants.URL_MEANCOV, content: content, completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let uid = defaults.objectForKey("UserID")
+        let content = ["means": means, "covs": covs, "userid": uid!]
+        Constants.sendJSONPostData(Constants.URL_MEANCOV, content: content, completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             
             // make sure we get a 200 response
             // only save the features on the phone if the transmission was successful

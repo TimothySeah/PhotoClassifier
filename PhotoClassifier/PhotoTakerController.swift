@@ -15,10 +15,10 @@ class PhotoTakerController: UIViewController, UIImagePickerControllerDelegate, U
     // when usePhoto button pressed, segue to next screen
     @IBAction func usePhoto(sender: UIButton) {
         if let _ = currentImage.image {
-            print("The ImageView contains an image")
+            //print("The ImageView contains an image")
             self.performSegueWithIdentifier("usePhoto", sender: sender)
         } else {
-            print("The ImageView does not contain an image")
+            //print("The ImageView does not contain an image")
         }
     }
 
@@ -88,7 +88,7 @@ class PhotoTakerController: UIViewController, UIImagePickerControllerDelegate, U
     // what to do when image was saved successfully/unsuccessfully
     // called by selector
     func imageWasSavedSuccessfully(image: UIImage, didFinishSavingWithError error: NSError!, context: UnsafeMutablePointer<()>) {
-        print("Image saved")
+        //print("Image saved")
         if let theError = error {
             print("An error happened while saving the image = \(theError)")
         }

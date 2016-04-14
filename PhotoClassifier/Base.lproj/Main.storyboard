@@ -303,12 +303,16 @@
                                 <subviews>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xBm-Hi-c1w">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="jKd-Gs-6QV" id="LJT-F6-ocg"/>
+                                            <outlet property="delegate" destination="jKd-Gs-6QV" id="Tn1-4z-JUZ"/>
+                                        </connections>
                                     </pickerView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RSn-ku-J43">
                                         <rect key="frame" x="130" y="231" width="59" height="30"/>
                                         <state key="normal" title="Classify!"/>
                                         <connections>
-                                            <action selector="sendClassification:" destination="jKd-Gs-6QV" eventType="touchUpInside" id="1Q9-pX-T4x"/>
+                                            <action selector="getClassification:" destination="jKd-Gs-6QV" eventType="touchUpInside" id="CPs-nl-q3t"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iris virginica" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RcC-Ah-rgu">
@@ -327,8 +331,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="label" destination="RcC-Ah-rgu" id="as7-VJ-hUK"/>
-                        <outlet property="pickerView" destination="xBm-Hi-c1w" id="CWs-Kr-NfR"/>
+                        <outlet property="categoryPicker" destination="xBm-Hi-c1w" id="FHP-3l-2Dd"/>
+                        <outlet property="classification" destination="RcC-Ah-rgu" id="KAx-TO-iqY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="14k-mu-QQJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
