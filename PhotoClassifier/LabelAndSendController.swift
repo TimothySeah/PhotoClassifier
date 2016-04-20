@@ -71,6 +71,15 @@ class LabelAndSendController: UIViewController, UIPickerViewDataSource, UIPicker
             }
         }
         
+        // if userid not set yet (aka Tu not defined yet), set it and dont send features yet
+        let defaults = NSUserDefaults.standardUserDefaults()
+        guard let _ = defaults.objectForKey("UserID") else {
+            print("Dont send label yet: userid not yet defined")
+            Constants.initTu()
+            return
+        }
+        
+        
         // define content to send
         let catVal = categories[categoryPicker.selectedRowInComponent(0)]
         let labVal = labels[categoryPicker.selectedRowInComponent(0)][labelPicker.selectedRowInComponent(0)]
@@ -81,12 +90,11 @@ class LabelAndSendController: UIViewController, UIPickerViewDataSource, UIPicker
             featuresArr[i][0] = features[irisFields[i]]!
         }
         let Ru = NSKeyedUnarchiver.unarchiveObjectWithFile(Constants.RuURL.path!) as! [[Double]]
-        let defaults = NSUserDefaults.standardUserDefaults()
         let uid = defaults.objectForKey("UserID")
         let content = ["category": catVal, "label": labVal, "features": Constants.matrixMultiply(Ru, m2: featuresArr), "userid": uid as! String]
         
         // send the request with completionHandler
-        Constants.sendJSONPostData(Constants.URL_NEWPOINT, content: content, completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+        Constants.sendJSONPostData(Constants.URL_NEWPOINT, content: content as! [String : AnyObject], completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
                 
                 // make sure we get a 200 response
                 // only save the features on the phone if the transmission was successful

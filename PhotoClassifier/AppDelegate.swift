@@ -14,7 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
         
         // generate and save random matrix Ru if it does not already exist
         if let _ = NSKeyedUnarchiver.unarchiveObjectWithFile(Constants.RuURL.path!) as? [[Double]] {
@@ -36,51 +35,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 1) save and send the userid
         // 2) initiate the workflow that results in the creation of Tu on the server side
         let defaults = NSUserDefaults.standardUserDefaults()
-        /*if let _ = defaults.objectForKey("UserID") {
+        if let _ = defaults.objectForKey("UserID") {
             print("userid already exists")
-        } else {*/
-            
-            // save userid
-            let uid = NSUUID().UUIDString
-            defaults.setObject(uid, forKey: "UserID")
-            
-            // POST to server
-            Constants.sendJSONPostData(Constants.URL_INIT, content: ["userid": uid], completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
-                
-                // make sure we get a 200 response
-                guard let realResponse = response as? NSHTTPURLResponse where realResponse.statusCode == 200 else {
-                    print("Not a 200 response")
-                    return
-                }
-                
-                // overfishing not done yet
-                // send Ru(Z + eu) to django
-                guard let Ru = NSKeyedUnarchiver.unarchiveObjectWithFile(Constants.RuURL.path!) as? [[Double]] else {
-                    print("RU IS NOT INITIALIZED SOMEHOW")
-                    return
-                }
-                do {
-                    let Z = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! [[Double]]
-                    // overfishing set eu to an appropriate value
-                    let eu = Constants.getRandomMatrix(Z.count, cols: Z[0].count, multiplier: 0.05)
-                    let Zu = Constants.matrixMultiply(Ru, m2: Constants.matrixAdd(Z, m2: eu)!)
-                    let content = ["userid": uid, "Zu": Zu]
-                    Constants.sendJSONPostData(Constants.URL_INIT2, content: content, completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
-                        
-                        // make sure we get a 200 response
-                        guard let realResponse = response as? NSHTTPURLResponse where realResponse.statusCode == 200 else {
-                            print("Not a 200 response")
-                            return
-                        }
-                        
-                        print("attempted to send Zu")
-                        
-                    })
-                } catch {
-                    print("Error -> \(error)")
-                }
-            })
-        //}
+        } else {
+            Constants.initTu()
+        }
         
         return true
     }

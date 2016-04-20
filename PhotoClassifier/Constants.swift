@@ -12,6 +12,9 @@ import Foundation
 
 class Constants {
     
+    // password: very primitive security mechanism
+    static let PASSWORD = "mFnfWD6tZfrsAAt"
+    
     // storage locations
     static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
     static let RuURL = DocumentsDirectory.URLByAppendingPathComponent("Ru")
@@ -21,7 +24,7 @@ class Constants {
     
     // api endpoints
     // overfishing: change to match actual server
-    static let URL_NEWPOINT = "http://192.168.0.15:8000"
+    static let URL_NEWPOINT = "http://192.168.0.15:8000/sendfeatures"
     static let URL_MEANCOV = "http://192.168.0.15:8000/meancov"
     static let URL_INIT = "http://192.168.0.15:8000/init"
     static let URL_INIT2 = "http://192.168.0.15:8000/init2"
@@ -92,8 +95,9 @@ class Constants {
         return mat
     }
     
-    // send CONTENT to URL using POST/JSON
-    static func sendJSONPostData(URL: String, content: AnyObject, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) {
+    // send CONTENT (a dictionary) to URL using POST/JSON
+    static func sendJSONPostData(URL: String, var content: [String: AnyObject], completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) {
+        content["password"] = PASSWORD
         let request = NSMutableURLRequest(URL: NSURL(string: URL)!)
         request.HTTPMethod = "POST"
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
@@ -104,5 +108,48 @@ class Constants {
         }
         let session = NSURLSession.sharedSession()
         session.dataTaskWithRequest(request, completionHandler: completionHandler).resume()
+    }
+    
+    // start the cycle that results in Tu being created for this user on the server side
+    static func initTu() {
+        
+        // POST to server
+        let uid = NSUUID().UUIDString
+        Constants.sendJSONPostData(Constants.URL_INIT, content: ["userid": uid], completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+            
+            // make sure we get a 200 response
+            guard let realResponse = response as? NSHTTPURLResponse where realResponse.statusCode == 200 else {
+                print("Not a 200 response: could not send userid")
+                return
+            }
+            
+            // overfishing not done yet
+            // send Ru(Z + eu) to django
+            guard let Ru = NSKeyedUnarchiver.unarchiveObjectWithFile(Constants.RuURL.path!) as? [[Double]] else {
+                print("RU IS NOT INITIALIZED SOMEHOW")
+                return
+            }
+            do {
+                let Z = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! [[Double]] // assumes that server sends Z as data
+                // overfishing set eu to an appropriate value
+                let eu = Constants.getRandomMatrix(Z.count, cols: Z[0].count, multiplier: 0.05)
+                let Zu = Constants.matrixMultiply(Ru, m2: Constants.matrixAdd(Z, m2: eu)!)
+                let content = ["userid": uid, "Zu": Zu]
+                Constants.sendJSONPostData(Constants.URL_INIT2, content: content as! [String : AnyObject], completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+                    
+                    // make sure we get a 200 response
+                    guard let realResponse = response as? NSHTTPURLResponse where realResponse.statusCode == 200 else {
+                        print("Not a 200 response: could not send Zu")
+                        return
+                    }
+                    
+                    // only save userid if it was successful
+                    let defaults = NSUserDefaults.standardUserDefaults()
+                    defaults.setObject(uid, forKey: "UserID")
+                })
+            } catch {
+                print("Error -> \(error)")
+            }
+        })
     }
 }
