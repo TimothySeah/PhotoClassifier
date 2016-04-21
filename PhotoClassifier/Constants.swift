@@ -28,6 +28,7 @@ class Constants {
     static let URL_MEANCOV = "http://192.168.0.15:8000/meancov"
     static let URL_INIT = "http://192.168.0.15:8000/init"
     static let URL_INIT2 = "http://192.168.0.15:8000/init2"
+    static let URL_GETCLASS = "http://192.168.0.15:8000/getclass"
     
     // matrix dimensions
     static let F = ["Irises": 4]

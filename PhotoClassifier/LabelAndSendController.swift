@@ -113,7 +113,7 @@ class LabelAndSendController: UIViewController, UIPickerViewDataSource, UIPicker
                 // overfishing
                 //Testing.printFeatures()
                 
-                // read the json
+                // read the data
                 if let postString = NSString(data: data!, encoding: NSUTF8StringEncoding) as? String {
                     // Print what we got from the call
                     print("POST: " + postString)

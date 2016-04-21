@@ -13,8 +13,12 @@ class ClassifyController: UIViewController, UIPickerViewDataSource, UIPickerView
     @IBOutlet weak var categoryPicker: UIPickerView!
     let categories = Constants.CATEGORIES
     
-    @IBOutlet weak var classification: UILabel!
+    @IBOutlet weak var classLabel: UILabel!
     let labels = Constants.LABELS
+    
+    @IBOutlet var irisDimensions: [UITextField]!
+    let irisFields = Constants.IRISFIELDS
+    
     
     
     // MARK: - basic picker functions
@@ -40,20 +44,59 @@ class ClassifyController: UIViewController, UIPickerViewDataSource, UIPickerView
     // then display that classification in label
     // overfishing: this method is used for testing for now
     @IBAction func getClassification(sender: UIButton) {
-        print("WHATS GOOD")
+        
+        // if text fields not filled in / invalid, dont send
+        for tf in irisDimensions {
+            guard let _ = Double(tf.text!) else {
+                print("Invalid text field!")
+                return
+            }
+        }
+        
+        // define content to send
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let catVal = categories[categoryPicker.selectedRowInComponent(0)]
+        var featuresArr = [[Double]](count: Constants.F["Irises"]!, repeatedValue: [0.0])
+        for i in 0...(irisDimensions.count-1) {
+            featuresArr[i][0] = Double(irisDimensions[i].text!)!
+        }
+        let uid = defaults.objectForKey("UserID")
+        let content = ["category": catVal, "features": featuresArr, "userid": uid as! String]
+        
+        // send request with completionHandler
+        Constants.sendJSONPostData(Constants.URL_GETCLASS, content: content as! [String : AnyObject], completionHandler: { (data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
+            
+            // overfishing: better way to ensure success?
+            guard let realResponse = response as? NSHTTPURLResponse where realResponse.statusCode == 200 else {
+                print("Not a 200 response: could not reach server at URL_GETCLASS")
+                self.classLabel.text = "Could not reach server"
+                return
+            }
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                self.classLabel.text = NSString(data: data!, encoding: NSUTF8StringEncoding) as? String
+            }
+        })
     }
     
+    // MARK: - Basic callback functions
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        // sort the irisDimensions array by tag
+        irisDimensions.sortInPlace {(tf1: UITextField, tf2: UITextField) -> Bool in
+            tf1.tag < tf2.tag
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    //
     
 
     /*
